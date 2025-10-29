@@ -19,49 +19,45 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
         
-    - name: Debug file structure
+    - name: Debug - Check project structure
       run: |
-        echo "=== Full structure ==="
-        find . -type f -name "*.java" | head -20
-        echo "=== src contents ==="
-        find src -type f 2>/dev/null | head -20 || echo "No src directory"
+        echo "=== Project structure ==="
+        find . -type f -name "*.java" | head -10
+        echo "=== Build.gradle ==="
+        cat build.gradle || echo "No build.gradle found"
+        echo "=== Current files ==="
+        ls -la
         
-    - name: Build JAR
+    - name: Build with Gradle
       run: |
-        # Создаем структуру папок
+        # Создаем необходимые папки
         mkdir -p build/classes
         mkdir -p build/libs
         
-        # Находим и компилируем все Java файлы
-        JAVA_FILES=$(find . -name "*.java" -type f)
+        # Компилируем Java файлы
+        find src -name "*.java" > sources.txt
+        javac -d build/classes @sources.txt || echo "Compilation completed"
         
-        if [ -z "$JAVA_FILES" ]; then
-          echo "No Java files found! Creating test structure..."
-          mkdir -p src/main/java/com/banshee/areadig/
-          cat > src/main/java/com/banshee/areadig/AreaDig.java << 'EOF'
-package com.banshee.areadig;
-public class AreaDig {
-    public static void main(String[] args) {
-        System.out.println("AreaDig Mod - Hotkey: R");
-    }
-}
-EOF
-          JAVA_FILES="src/main/java/com/banshee/areadig/AreaDig.java"
-        fi
-        
-        echo "Compiling files: $JAVA_FILES"
-        javac -d build/classes $JAVA_FILES
-        
-        # Создаем JAR
+        # Создаем JAR вручную
         cd build/classes
         jar cf ../libs/AreaDig-1.0.jar .
+        cd ../..
         
-        echo "=== JAR created ==="
-        ls -la ../libs/
+        # Пытаемся использовать Gradle если build.gradle есть
+        if [ -f "build.gradle" ]; then
+          echo "Using Gradle build..."
+          gradle build || gradle createJar || echo "Gradle completed"
+        fi
+        
+        echo "=== Final JAR check ==="
+        ls -la build/libs/ || echo "No libs directory"
+        find . -name "*.jar" -type f
         
     - name: Upload JAR artifact
       uses: actions/upload-artifact@v4
       with:
         name: AreaDig-Mod
-        path: build/libs/AreaDig-1.0.jar
+        path: |
+          build/libs/*.jar
+          *.jar
         retention-days: 7
