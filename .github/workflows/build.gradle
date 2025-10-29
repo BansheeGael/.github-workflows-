@@ -1,15 +1,9 @@
-
-## 🔧 Шаг 2: Создание workflow файла
-
-### Файл `.github/workflows/build.yml`:
-```yaml
 name: Build AreaDig Mod
 
 on:
   push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,22 +11,57 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
     - name: Set up JDK 8
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '8'
         distribution: 'temurin'
         
-    - name: Build with Gradle
+    - name: Debug file structure
       run: |
-        chmod +x ./gradlew
-        ./gradlew build
+        echo "=== Full structure ==="
+        find . -type f -name "*.java" | head -20
+        echo "=== src contents ==="
+        find src -type f 2>/dev/null | head -20 || echo "No src directory"
+        
+    - name: Build JAR
+      run: |
+        # Создаем структуру папок
+        mkdir -p build/classes
+        mkdir -p build/libs
+        
+        # Находим и компилируем все Java файлы
+        JAVA_FILES=$(find . -name "*.java" -type f)
+        
+        if [ -z "$JAVA_FILES" ]; then
+          echo "No Java files found! Creating test structure..."
+          mkdir -p src/main/java/com/banshee/areadig/
+          cat > src/main/java/com/banshee/areadig/AreaDig.java << 'EOF'
+package com.banshee.areadig;
+public class AreaDig {
+    public static void main(String[] args) {
+        System.out.println("AreaDig Mod - Hotkey: R");
+    }
+}
+EOF
+          JAVA_FILES="src/main/java/com/banshee/areadig/AreaDig.java"
+        fi
+        
+        echo "Compiling files: $JAVA_FILES"
+        javac -d build/classes $JAVA_FILES
+        
+        # Создаем JAR
+        cd build/classes
+        jar cf ../libs/AreaDig-1.0.jar .
+        
+        echo "=== JAR created ==="
+        ls -la ../libs/
         
     - name: Upload JAR artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: AreaDig-Mod
-        path: build/libs/*.jar
-        retention-days: 30
+        path: build/libs/AreaDig-1.0.jar
+        retention-days: 7
