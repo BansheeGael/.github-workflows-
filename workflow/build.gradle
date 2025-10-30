@@ -1,10 +1,8 @@
-// Сначала блок plugins
 plugins {
     id 'java'
     id 'fabric-loom' version '1.0-SNAPSHOT'
 }
 
-// Затем репозитории
 repositories {
     mavenCentral()
     maven { url 'https://maven.fabricmc.net/' }
