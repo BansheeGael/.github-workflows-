@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'fabric-loom' version '1.0-SNAPSHOT'
+    id 'fabric-loom' version '1.0.18'
 }
 
 repositories {
@@ -9,12 +9,25 @@ repositories {
     maven { url 'https://maven.minecraftforge.net/' }
 }
 
+loom {
+    // Укажите версию Minecraft
+    minecraftVersion = '1.19.2'  // Укажите вашу версию Minecraft
+}
+
+dependencies {
+    // Добавьте зависимости для вашей версии Minecraft
+    minecraft "com.mojang:minecraft:1.19.2"
+    mappings loom.officialMojangMappings()
+    
+    // Добавьте fabric-loader
+    modImplementation "net.fabricmc:fabric-loader:0.14.11"
+    
+    // Добавьте fabric-api (если нужно)
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.69.0+1.19.2"
+}
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
-}
-
-dependencies {
-    // Ваши зависимости
 }
