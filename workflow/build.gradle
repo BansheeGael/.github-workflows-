@@ -10,20 +10,22 @@ repositories {
 }
 
 loom {
-    // Укажите версию Minecraft
-    minecraftVersion = '1.19.2'  // Укажите вашу версию Minecraft
+    // Укажите версию Minecraft, с которой вы работаете
+    minecraftVersion = '1.19.2'  // Измените на вашу версию
 }
 
 dependencies {
-    // Добавьте зависимости для вашей версии Minecraft
-    minecraft "com.mojang:minecraft:1.19.2"
+    // Зависимость от Minecraft
+    minecraft "com.mojang:minecraft:1.19.2"  // Измените на вашу версию
+    
+    // Официальные маппинги
     mappings loom.officialMojangMappings()
     
-    // Добавьте fabric-loader
-    modImplementation "net.fabricmc:fabric-loader:0.14.11"
+    // Fabric Loader
+    modImplementation "net.fabricmc:fabric-loader:0.14.11"  // Проверьте актуальную версию
     
-    // Добавьте fabric-api (если нужно)
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.69.0+1.19.2"
+    // Fabric API (если нужно)
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.69.0+1.19.2"  // Проверьте актуальную версию
 }
 
 java {
