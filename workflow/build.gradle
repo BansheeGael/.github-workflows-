@@ -1,35 +1,26 @@
 plugins {
     id 'java'
-    id 'fabric-loom' version '1.0.18'
+    id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT'
 }
 
 repositories {
     mavenCentral()
-    maven { url 'https://maven.fabricmc.net/' }
     maven { url 'https://maven.minecraftforge.net/' }
+    maven { url 'https://files.minecraftforge.net/maven/' }
 }
 
-loom {
-    // Укажите версию Minecraft, с которой вы работаете
-    minecraftVersion = '1.19.2'  // Измените на вашу версию
+minecraft {
+    version = "1.7.10-10.13.4.1558" // Версия Forge для 1.7.10
+    runDir = "run"
 }
 
 dependencies {
-    // Зависимость от Minecraft
-    minecraft "com.mojang:minecraft:1.19.2"  // Измените на вашу версию
-    
-    // Официальные маппинги
-    mappings loom.officialMojangMappings()
-    
-    // Fabric Loader
-    modImplementation "net.fabricmc:fabric-loader:0.14.11"  // Проверьте актуальную версию
-    
-    // Fabric API (если нужно)
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.69.0+1.19.2"  // Проверьте актуальную версию
+    // Зависимость от Forge
+    minecraft "net.minecraftforge:forge:1.7.10-10.13.4.1558"
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(8) // Для 1.7.10 требуется Java 8
     }
 }
