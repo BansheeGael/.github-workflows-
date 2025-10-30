@@ -1,8 +1,9 @@
-// Конфигурация репозиториев для плагинов
-buildscript {
+// Добавляем репозитории перед блоком plugins
+pluginManagement {
     repositories {
-        maven { url 'https://maven.fabricmc.net/' }
         gradlePluginPortal()
+        maven { url 'https://maven.fabricmc.net/' }
+        mavenCentral()
     }
 }
 
@@ -15,4 +16,14 @@ repositories {
     mavenCentral()
     maven { url 'https://maven.fabricmc.net/' }
     maven { url 'https://maven.minecraftforge.net/' }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+dependencies {
+    // Добавьте ваши зависимости
 }
