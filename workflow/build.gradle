@@ -1,5 +1,23 @@
 plugins {
     id 'java'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.fabricmc.net/' }
+    maven { url 'https://maven.minecraftforge.net/' }
+}
+
+
+plugins {
+    id 'java'
     id 'fabric-loom' version '1.0-SNAPSHOT' // если это мод для Minecraft
 }
 
@@ -22,3 +40,4 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
