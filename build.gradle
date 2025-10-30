@@ -16,6 +16,9 @@ dependencies {
     // Добавьте зависимости вашего проекта
     // Например:
     // modImplementation "net.fabricmc:fabric-loader:0.14.18"
+    // Minecraft API
+    implementation 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+    // Другие зависимости
 }
 
 java {
