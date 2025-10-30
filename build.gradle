@@ -1,4 +1,20 @@
 plugins {
+    id 'fabric-loom' version '1.0-SNAPSHOT'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.minecraftforge.net/' }
+    maven { url 'https://maven.fabricmc.net/' }  // Добавляем репозиторий fabric
+}
+
+dependencies {
+    // Добавьте зависимости для вашего проекта
+    modImplementation "net.fabricmc:fabric-loader:<версия>"
+    // Другие зависимости
+}
+
+plugins {
     id 'java'
     id 'fabric-loom' version '1.0-SNAPSHOT' // если это мод для Minecraft
 }
