@@ -1,17 +1,10 @@
-// Добавляем репозитории перед блоком plugins
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        maven { url 'https://maven.fabricmc.net/' }
-        mavenCentral()
-    }
-}
-
+// Сначала блок plugins
 plugins {
     id 'java'
     id 'fabric-loom' version '1.0-SNAPSHOT'
 }
 
+// Затем репозитории
 repositories {
     mavenCentral()
     maven { url 'https://maven.fabricmc.net/' }
@@ -25,5 +18,5 @@ java {
 }
 
 dependencies {
-    // Добавьте ваши зависимости
+    // Ваши зависимости
 }
