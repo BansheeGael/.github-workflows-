@@ -1,6 +1,0 @@
-# Русская локализация для маскировки
-itemGroup.jmapenhance=Улучшения JourneyMap
-
-# Сообщения в чат
-msg.jmapenhance.loaded=Улучшения JourneyMap загружены
-msg.jmapenhance.help=Используйте ПКМ с пустой рукой для активации расширенных функций
